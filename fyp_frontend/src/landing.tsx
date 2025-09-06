@@ -20,7 +20,7 @@ const Landing: React.FC = () => {
       try {
         const response = await fetch(`${API_BASE_URL}/questions`);
         if (!response.ok) throw new Error("Failed to fetch questions");
-
+        console.log(response)
         const data = await response.json();
         setQuestions(data);
       } catch (error) {
