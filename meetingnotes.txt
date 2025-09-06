@@ -29,7 +29,6 @@ Frontend:
 Others:
 1. Deployment (1 day)
 2. User testing (1 week, will run concurrently)
-3. 
 
 
 
