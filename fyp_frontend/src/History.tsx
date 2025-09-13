@@ -31,6 +31,7 @@ const History: React.FC = () => {
   useEffect(() => {
     const fetchUserHistory = async () => {
       try {
+        
         const feedbackRes = await fetch(`${API_BASE_URL}/user-history`, {
           method: "GET",
           credentials: "include",
@@ -57,17 +58,31 @@ const History: React.FC = () => {
   // };
 
   // Function to handle confirming the removal
-  const confirmRemoveQuestion = () => {
+  const confirmRemoveQuestion = async () => {
+
     if (questionToRemove) {
       console.log(`Removing question with ID: ${questionToRemove}`);
-      
-      // Remove from local state
-      // setFeedbackList(prev => prev.filter(entry => entry.question_id !== questionToRemove));
-      
-      // // Clear selection if removed item was selected
-      // if (selectedFeedback && selectedFeedback.question_id === questionToRemove) {
-      //   setSelectedFeedback(null);
-      // }
+      try {
+        const userRes = await fetch(`${API_BASE_URL}/me`, { credentials: "include" });
+        const userData = await userRes.json();
+        if (!userData.email) throw new Error("User email not found");
+        const email = userData.email;
+
+        const deleteHistoryRes = await fetch(`${API_BASE_URL}/delete_history`, {
+          method: "POST",
+          credentials: "include",
+          body: JSON.stringify({ "student_id": email, "question_id": questionToRemove })
+        });
+
+        if (!deleteHistoryRes.ok) throw new Error("Failed to delete interview history");
+
+      } catch (err) {
+        console.error("❌ Errordeleting interview history:", err);
+        setError("Could not delete interview history.");
+      } finally {
+        console.log("Successfully deleted interview history!")
+      }
+
     }
     
     // Close modal and reset
