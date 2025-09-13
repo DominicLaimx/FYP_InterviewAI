@@ -71,7 +71,7 @@ const History: React.FC = () => {
 
         const deleteHistoryRes = await fetch(`${API_BASE_URL}/delete_history`, {
           method: "POST",
-          credentials: "include",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ "student_id": email, "question_id": questionToRemove })
         });
 
