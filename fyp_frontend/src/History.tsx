@@ -82,9 +82,9 @@ const History: React.FC = () => {
   };
 
   // Function to handle removing a question
-  const handleRemoveQuestion = (e, questionId) => {
+  const handleRemoveQuestion = (questionId) => {
     // Prevent the click from bubbling up to the card click handler
-    e.stopPropagation();
+    // e.stopPropagation();
     
     // Show confirmation instead of directly removing
     // showRemoveConfirmation(questionId);
