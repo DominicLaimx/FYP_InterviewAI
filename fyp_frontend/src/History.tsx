@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Trash2 } from 'lucide-react';
 
 const API_BASE_URL = "https://fypbackend-b5gchph9byc4b8gt.canadacentral-01.azurewebsites.net";
 
@@ -48,6 +49,22 @@ const History: React.FC = () => {
     fetchUserHistory();
   }, []);
 
+  const handleRemoveQuestion = (questionId) => {
+    // Prevent the click from bubbling up to the card click handler
+    event.stopPropagation();
+    
+    // Here you would typically call your API to remove the question
+    console.log(`Removing question with ID: ${questionId}`);
+    
+    // For now, just remove it from the local state
+    setFeedbackList(prev => prev.filter(entry => entry.question_id !== questionId));
+    
+    // If the removed item was selected, clear the selection
+    if (selectedFeedback && selectedFeedback.question_id === questionId) {
+      setSelectedFeedback(null);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <h1 className="text-3xl font-bold text-center text-gray-900 mb-6">
@@ -68,9 +85,22 @@ const History: React.FC = () => {
               className="bg-white shadow-md rounded-lg p-4 border border-gray-200 transition-transform hover:scale-[1.02] hover:shadow-lg cursor-pointer flex flex-col h-full"
               onClick={() => setSelectedFeedback(entry)}
             >
+            <div className="flex justify-between items-start mb-2">
               <h2 className="text-xl font-semibold text-gray-800">
                 Question #{entry.question_id}
               </h2>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleRemoveQuestion(entry.question_id);
+                }}
+                className="text-red-500 hover:text-red-700 hover:bg-red-50 p-1 rounded-full transition-colors"
+                title="Remove question"
+              >
+                <Trash2 size={16} />
+              </button>
+            </div>
+            
               <p className="text-gray-600 italic text-sm">{entry.question_text}</p>
 
               {/* Final Evaluation */}
