@@ -25,6 +25,8 @@ const History: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedFeedback, setSelectedFeedback] = useState<FeedbackEntry | null>(null);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [questionToRemove, setQuestionToRemove] = useState(null);
 
   useEffect(() => {
     const fetchUserHistory = async () => {
@@ -49,20 +51,45 @@ const History: React.FC = () => {
     fetchUserHistory();
   }, []);
 
-  const handleRemoveQuestion = (questionId) => {
+  // const showRemoveConfirmation = (questionId) => {
+  //   setQuestionToRemove(questionId);
+  //   setShowConfirmModal(true);
+  // };
+
+  // Function to handle confirming the removal
+  const confirmRemoveQuestion = () => {
+    if (questionToRemove) {
+      console.log(`Removing question with ID: ${questionToRemove}`);
+      
+      // Remove from local state
+      // setFeedbackList(prev => prev.filter(entry => entry.question_id !== questionToRemove));
+      
+      // // Clear selection if removed item was selected
+      // if (selectedFeedback && selectedFeedback.question_id === questionToRemove) {
+      //   setSelectedFeedback(null);
+      // }
+    }
+    
+    // Close modal and reset
+    setShowConfirmModal(false);
+    setQuestionToRemove(null);
+  };
+
+  // Function to cancel removal
+  const cancelRemoveQuestion = () => {
+    setShowConfirmModal(false);
+    setQuestionToRemove(null);
+  };
+
+  // Function to handle removing a question
+  const handleRemoveQuestion = (e, questionId) => {
     // Prevent the click from bubbling up to the card click handler
-    event.stopPropagation();
+    e.stopPropagation();
     
-    // Here you would typically call your API to remove the question
-    console.log(`Removing question with ID: ${questionId}`);
-    
-    // For now, just remove it from the local state
-    // setFeedbackList(prev => prev.filter(entry => entry.question_id !== questionId));
-    
-    // If the removed item was selected, clear the selection
-    // if (selectedFeedback && selectedFeedback.question_id === questionId) {
-    //   setSelectedFeedback(null);
-    // }
+    // Show confirmation instead of directly removing
+    // showRemoveConfirmation(questionId);
+    setQuestionToRemove(questionId);
+    setShowConfirmModal(true);
   };
 
   return (
@@ -127,6 +154,36 @@ const History: React.FC = () => {
           ))}
         </div>
       )}
+    {/* Confirmation Modal */}
+      {showConfirmModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 shadow-xl">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Confirm Deletion
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to remove Question #{questionToRemove}? This action cannot be undone.
+            </p>
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={cancelRemoveQuestion}
+                className="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmRemoveQuestion}
+                className="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700 transition-colors"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
       {/* Popup Modal */}
       {/* Popup Modal */}
