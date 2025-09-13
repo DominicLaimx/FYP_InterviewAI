@@ -181,9 +181,6 @@ const History: React.FC = () => {
           </div>
         </div>
       )}
-    </div>
-  );
-}
 
       {/* Popup Modal */}
       {/* Popup Modal */}
