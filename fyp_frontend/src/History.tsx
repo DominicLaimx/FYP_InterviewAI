@@ -63,10 +63,11 @@ const History: React.FC = () => {
     if (questionToRemove) {
       console.log(`Removing question with ID: ${questionToRemove}`);
       try {
-        const userRes = await fetch(`${API_BASE_URL}/me`, { credentials: "include" });
-        const userData = await userRes.json();
-        if (!userData.email) throw new Error("User email not found");
-        const email = userData.email;
+        // const userRes = await fetch(`${API_BASE_URL}/me`, { credentials: "include" });
+        // const userData = await userRes.json();
+        // if (!userData.email) throw new Error("User email not found");
+        // const email = userData.email;
+        const email = "domi0015@e.ntu.edu.sg"
 
         const deleteHistoryRes = await fetch(`${API_BASE_URL}/delete_history`, {
           method: "POST",
@@ -199,7 +200,7 @@ const History: React.FC = () => {
 
       {/* Popup Modal */}
       {/* Popup Modal */}
-{/* {selectedFeedback && (
+{selectedFeedback && (
   <div
     className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4"
     onClick={() => setSelectedFeedback(null)}
@@ -235,7 +236,7 @@ const History: React.FC = () => {
       </button>
     </div>
   </div>
-)} */}
+)}
     </div>
   );
 }
