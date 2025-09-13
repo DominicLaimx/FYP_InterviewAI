@@ -57,12 +57,12 @@ const History: React.FC = () => {
     console.log(`Removing question with ID: ${questionId}`);
     
     // For now, just remove it from the local state
-    setFeedbackList(prev => prev.filter(entry => entry.question_id !== questionId));
+    // setFeedbackList(prev => prev.filter(entry => entry.question_id !== questionId));
     
     // If the removed item was selected, clear the selection
-    if (selectedFeedback && selectedFeedback.question_id === questionId) {
-      setSelectedFeedback(null);
-    }
+    // if (selectedFeedback && selectedFeedback.question_id === questionId) {
+    //   setSelectedFeedback(null);
+    // }
   };
 
   return (
