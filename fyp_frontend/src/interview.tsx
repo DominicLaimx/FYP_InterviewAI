@@ -118,7 +118,7 @@ const App: React.FC = () => {
     if (timerActive) return; // Don’t start again if it’s already running
 
     // Set to 600 seconds => 10 minutes (using 10 seconds for quick testing)
-    setTimeLeft(300);
+    setTimeLeft(30);
     setTimerActive(true);
 
     timerRef.current = setInterval(() => {
@@ -143,6 +143,11 @@ const App: React.FC = () => {
     const s = seconds % 60;
     return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
+
+  const handle_end_interview = () => {
+    setTimerActive(false);
+    setShowFeedback(true); 
+  }
 
   // 4. Renamed final evaluation function to avoid collision
   const performFinalEvaluation = async () => {
@@ -488,15 +493,26 @@ const toggleRecording = async () => {
               <Code2 size={20} />
               <h2 className="font-semibold">Code Editor</h2>
             </div>
+        {/* Button Group */}
+            <div className="flex items-center gap-3">
+              {/* End Interview Button */}
+              <button
+                onClick={handle_end_interview}
+                className="flex items-center gap-2 px-3 py-1 rounded-md bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={!timerActive}
+              >
+                End Interview
+              </button>
 
-            {/* Timer Button */}
-            <button
-              onClick={handleStartTimer}
-              disabled={timerActive}
-              className="flex items-center gap-2 px-3 py-1 rounded-md bg-green-600 text-white hover:bg-green-700"
-            >
-              {timerActive ? `Time Left: ${formatTime(timeLeft)}` : 'Start Interview'}
-            </button>
+              {/* Timer Button */}
+              <button
+                onClick={handleStartTimer}
+                disabled={timerActive}
+                className="flex items-center gap-2 px-3 py-1 rounded-md bg-green-600 text-white hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {timerActive ? `Time Left: ${formatTime(timeLeft)}` : 'Start Interview'}
+              </button>
+            </div>
           </div>
 
           {/* Editor */}
