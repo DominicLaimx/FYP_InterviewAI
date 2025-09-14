@@ -118,7 +118,7 @@ const App: React.FC = () => {
     if (timerActive) return; // Don’t start again if it’s already running
 
     // Set to 600 seconds => 10 minutes (using 10 seconds for quick testing)
-    setTimeLeft(30);
+    setTimeLeft(600);
     setTimerActive(true);
 
     timerRef.current = setInterval(() => {
@@ -508,10 +508,11 @@ const toggleRecording = async () => {
               <button
                 onClick={handleStartTimer}
                 disabled={timerActive}
-                className="flex items-center gap-2 px-3 py-1 rounded-md bg-green-600 text-white hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 px-3 py-1 rounded-md bg-green-600 text-white hover:bg-green-700"
               >
                 {timerActive ? `Time Left: ${formatTime(timeLeft)}` : 'Start Interview'}
               </button>
+              
             </div>
           </div>
 
