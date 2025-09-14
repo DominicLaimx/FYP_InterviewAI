@@ -63,11 +63,11 @@ const History: React.FC = () => {
     if (questionToRemove) {
       console.log(`Removing question with ID: ${questionToRemove}`);
       try {
-        // const userRes = await fetch(`${API_BASE_URL}/me`, { credentials: "include" });
-        // const userData = await userRes.json();
-        // if (!userData.email) throw new Error("User email not found");
-        // const email = userData.email;
-        const email = "domi0015@e.ntu.edu.sg"
+        const userRes = await fetch(`${API_BASE_URL}/me`, { credentials: "include" });
+        const userData = await userRes.json();
+        if (!userData.email) throw new Error("User email not found");
+        const email = userData.email;
+        // const email = "domi0015@e.ntu.edu.sg"
 
         const deleteHistoryRes = await fetch(`${API_BASE_URL}/delete_history`, {
           method: "POST",
@@ -76,6 +76,13 @@ const History: React.FC = () => {
         });
 
         if (!deleteHistoryRes.ok) throw new Error("Failed to delete interview history");
+
+        setFeedbackList(prev => prev.filter(entry => entry.question_id !== questionToRemove));
+        
+        if (selectedFeedback && selectedFeedback.question_id === questionToRemove) {
+          setSelectedFeedback(null);
+    
+  }
 
       } catch (err) {
         console.error("❌ Errordeleting interview history:", err);
