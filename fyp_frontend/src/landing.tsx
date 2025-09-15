@@ -47,6 +47,7 @@ const Landing: React.FC = () => {
               <th className="p-4 font-semibold">Summary</th>
               <th className="p-4 font-semibold text-center">LeetCode Question</th>
               <th className="p-4 font-semibold text-center">Difficulty</th>
+              <th className="p-4 font-semibold text-center">Category</th>
             </tr>
           </thead>
           <tbody>
