@@ -85,6 +85,10 @@ const Landing: React.FC = () => {
                   <td className={`p-4 font-bold text-center ${difficultyStyles[q.difficulty || "Easy"]}`}>
                     {q.difficulty || "Easy"}
                   </td>
+                  {/* Column 5: Category */}
+                  <td className="p-4 text-gray-700">
+                    {q.category || "None"}
+                  </td>
                 </tr>
               ))
             ) : (
