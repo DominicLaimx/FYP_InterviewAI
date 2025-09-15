@@ -14,6 +14,7 @@ const Landing: React.FC = () => {
   { id: number; title: string; summary: string; leetcode_link: string; difficulty: string }[]
   >([]);
   const navigate = useNavigate();
+  const [difficultyFilter, setDifficultyFilter] = useState("All");
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -31,6 +32,10 @@ const Landing: React.FC = () => {
     fetchQuestions();
   }, []);
 
+  const filteredQuestions = questions.filter((q) =>
+    difficultyFilter === "All" ? true : q.difficulty === difficultyFilter
+  );
+
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 flex flex-col items-center p-8">
       {/* Title */}
@@ -46,13 +51,28 @@ const Landing: React.FC = () => {
               <th className="p-4 font-semibold">Title</th>
               <th className="p-4 font-semibold">Summary</th>
               <th className="p-4 font-semibold text-center">LeetCode Question</th>
-              <th className="p-4 font-semibold text-center">Difficulty</th>
+              {/* <th className="p-4 font-semibold text-center">Difficulty</th> */}
+              <th className="p-4 font-semibold text-center">
+              <div className="flex flex-col items-center">
+                <span>Difficulty</span>
+                <select
+                  value={difficultyFilter}
+                  onChange={(e) => setDifficultyFilter(e.target.value)}
+                  className="mt-1 border border-gray-300 rounded text-xs"
+                >
+                  <option value="All">All</option>
+                  <option value="Easy">Easy</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Hard">Hard</option>
+                </select>
+              </div>
+            </th>
               <th className="p-4 font-semibold text-center">Category</th>
             </tr>
           </thead>
           <tbody>
-            {questions.length > 0 ? (
-              questions.map((q, index) => (
+            {filteredQuestions.length > 0 ? (
+              filteredQuestions.map((q, index) => (
                 <tr
                   key={q.id}
                   className={`border-b border-gray-300 hover:bg-gray-100 transition cursor-pointer ${
