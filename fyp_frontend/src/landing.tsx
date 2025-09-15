@@ -15,6 +15,7 @@ const Landing: React.FC = () => {
   >([]);
   const navigate = useNavigate();
   const [difficultyFilter, setDifficultyFilter] = useState("All");
+  const [categoryFilter, setCategoryFilter] = useState("All");
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -32,8 +33,11 @@ const Landing: React.FC = () => {
     fetchQuestions();
   }, []);
 
+  const categories = ["All", ...new Set(questions.map((q) => q.category || "None"))];
+
   const filteredQuestions = questions.filter((q) =>
-    difficultyFilter === "All" ? true : q.difficulty === difficultyFilter
+    (difficultyFilter === "All" || q.difficulty === difficultyFilter) &&
+    (categoryFilter === "All" || q.category === categoryFilter)
   );
 
   return (
@@ -67,7 +71,22 @@ const Landing: React.FC = () => {
                 </select>
               </div>
             </th>
-              <th className="p-4 font-semibold text-center">Category</th>
+              <th className="p-4 font-semibold text-center">
+                <div className="flex flex-col items-center">
+                  <span>Category</span>
+                  <select
+                    value={categoryFilter}
+                    onChange={(e) => setCategoryFilter(e.target.value)}
+                    className="mt-1 border border-gray-300 rounded text-xs"
+                  >
+                    {categories.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>
