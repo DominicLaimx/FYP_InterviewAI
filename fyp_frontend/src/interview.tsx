@@ -389,6 +389,7 @@ const maybePlayNextSentence = () => {
         { role: 'ai', message: 'Error connecting to server.' }
       ]);
     }
+  }
   
 const toggleRecording = async () => {
   if (isRecording) {
