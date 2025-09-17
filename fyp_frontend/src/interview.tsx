@@ -369,6 +369,26 @@ const maybePlayNextSentence = () => {
       ]);
     }
   };
+  const handle_run_code = async () => {
+    console.log("run code clicked")
+    try {
+      const response = await fetch(`${API_BASE_URL}/run_code_python`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          session_id: sessionId,
+          input_code: code
+        })
+      });
+
+      console.log(response)
+  }catch (error) {
+      console.error('❌ Streaming error:', error);
+      setConversation(prev => [
+        ...prev,
+        { role: 'ai', message: 'Error connecting to server.' }
+      ]);
+    }
   
 const toggleRecording = async () => {
   if (isRecording) {
@@ -495,6 +515,13 @@ const toggleRecording = async () => {
             </div>
         {/* Button Group */}
             <div className="flex items-center gap-3">
+              {/* Run Code Button */}
+              <button
+                onClick={handle_run_code}
+                className="flex items-center gap-2 px-3 py-1 rounded-md bg-blue-600 text-white hover:bg-blue-700"
+              >
+                Run Code
+              </button>
               {/* End Interview Button */}
               <button
                 onClick={handle_end_interview}
