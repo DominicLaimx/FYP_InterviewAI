@@ -380,14 +380,15 @@ const maybePlayNextSentence = () => {
           input_code: code
         })
       });
-
+      console.log("DOM")
       console.log(response)
+      console.log("DOM2")
   }catch (error) {
       console.error('❌ Streaming error:', error);
-      setConversation(prev => [
-        ...prev,
-        { role: 'ai', message: 'Error connecting to server.' }
-      ]);
+      // setConversation(prev => [
+      //   ...prev,
+      //   { role: 'ai', message: 'Error connecting to server.' }
+      // ]);
     }
   }
   
