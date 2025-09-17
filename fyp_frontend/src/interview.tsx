@@ -381,7 +381,8 @@ const maybePlayNextSentence = () => {
         })
       });
       console.log("DOM")
-      console.log(response)
+      const data = await response.json();
+      console.log(data.res)
       console.log("DOM2")
   }catch (error) {
       console.error('❌ Streaming error:', error);
