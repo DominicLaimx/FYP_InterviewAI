@@ -566,7 +566,6 @@ const toggleRecording = async () => {
       {/* Output Panel */}
       {showCodeOutput && (
         <div className="fixed bottom-0 left-0 right-0 bg-black text-green-400 font-mono text-sm p-4 max-h-60 overflow-y-auto shadow-lg border-t border-gray-700 transition-transform transform translate-y-0">
-        // <div className={`fixed bottom-0 left-0 right-0 bg-black text-green-400 font-mono text-sm p-4 max-h-60 overflow-y-auto shadow-lg border-t border-gray-700 transition-transform duration-300 ${showCodeOutput ? "translate-y-0" : "translate-y-full"}`}>
           <div className="flex justify-between items-center mb-2">
             <span className="text-white font-bold">Output</span>
             <button
