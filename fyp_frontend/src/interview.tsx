@@ -70,6 +70,9 @@ const App: React.FC = () => {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
 
+  const [showCodeOutput, setShowCodeOutput] = useState(false);
+  const [Codeoutput, setCodeOutput] = useState("");
+
   useEffect(() => {
     handleStartTimer();
   }, []);
@@ -384,6 +387,8 @@ const maybePlayNextSentence = () => {
       const data = await response.json();
       console.log(data.res)
       console.log("DOM2")
+      setCodeOutput(data.res); // assuming backend returns {res: "..."}
+      setShowCodeOutput(true);
   }catch (error) {
       console.error('❌ Streaming error:', error);
       // setConversation(prev => [
@@ -557,6 +562,22 @@ const toggleRecording = async () => {
           />
         </div>
       </div>
+      
+      {/* Output Panel */}
+      {showOutput && (
+        <div className="fixed bottom-0 left-0 right-0 bg-black text-green-400 font-mono text-sm p-4 max-h-60 overflow-y-auto shadow-lg border-t border-gray-700 transition-transform transform translate-y-0">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-white font-bold">Output</span>
+            <button
+              onClick={() => setShowOutput(false)}
+              className="text-gray-400 hover:text-white text-xs"
+            >
+              ✕
+            </button>
+          </div>
+          <pre className="whitespace-pre-wrap">{output}</pre>
+        </div>
+      )}
 
       {/* -- Feedback Popup (Modal) -- */}
       {showFeedback && (
