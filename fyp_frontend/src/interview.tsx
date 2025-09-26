@@ -73,10 +73,6 @@ const App: React.FC = () => {
 
   const [showCodeOutput, setShowCodeOutput] = useState(false);
   const [Codeoutput, setCodeOutput] = useState("");
-
-  useEffect(() => {
-    handleStartTimer();
-  }, []);
   
   // 1. Fetch question and init session
   useEffect(() => {
@@ -97,7 +93,6 @@ const App: React.FC = () => {
         sessionStorage.setItem("session_id", data.session_id); // ✅ Store session_id
         setSessionId(data.session_id);
         sessionStorage.setItem("session_id", data.session_id);
-        console.log("DOM", data.difficulty, typeof data.difficulty)
         setDifficulty(data.difficulty)
         setQuestion(data.question);
         setExample(data.example);
@@ -111,6 +106,10 @@ const App: React.FC = () => {
     startInterview();
   }, [questionId]);
 
+  useEffect(() => {
+    handleStartTimer();
+  }, []);
+
   // 2. Clean up interval on unmount
   useEffect(() => {
     return () => {
@@ -123,6 +122,7 @@ const App: React.FC = () => {
     if (timerActive) return; // Don’t start again if it’s already running
 
     // Set to 600 seconds => 10 minutes (using 10 seconds for quick testing)
+    console.log("Question difficulty:",difficulty)
     if (difficulty === "Easy") {
       setTimeLeft(600);
     } else if (difficulty === "Medium") {
