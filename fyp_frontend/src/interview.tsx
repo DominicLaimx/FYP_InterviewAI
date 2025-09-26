@@ -97,7 +97,7 @@ const App: React.FC = () => {
         setQuestion(data.question);
         setExample(data.example);
         setConstraint(data.constraint);
-        handleStartTimer();
+        handleStartTimer(data.difficulty);
       } catch (error) {
         console.error("Error starting interview:", error);
         setQuestion("Failed to load question.");
@@ -119,16 +119,16 @@ const App: React.FC = () => {
   }, []);
 
   // 3. Start the timer
-  const handleStartTimer = () => {
+  const handleStartTimer = (diff: string) => {
     if (timerActive) return; // Don’t start again if it’s already running
 
     // Set to 600 seconds => 10 minutes (using 10 seconds for quick testing)
-    console.log("Question difficulty:",difficulty)
-    if (difficulty === "Easy") {
+    console.log("Question difficulty:",diff)
+    if (diff === "Easy") {
       setTimeLeft(600);
-    } else if (difficulty === "Medium") {
+    } else if (diff === "Medium") {
       setTimeLeft(900);
-    } else if (difficulty === "Hard") {
+    } else if (diff === "Hard") {
       setTimeLeft(1200);
     } else {
       setTimeLeft(900);
@@ -554,7 +554,7 @@ const toggleRecording = async () => {
                 disabled={timerActive}
                 className="flex items-center gap-2 px-3 py-1 rounded-md bg-green-600 text-white hover:bg-green-700"
               >
-                {timerActive ? `Time Left: ${formatTime(timeLeft)}` : 'Start Interview'}
+                {timerActive ? `Time Left: ${formatTime(timeLeft)}` : 'Timer'}
               </button>
               
             </div>
