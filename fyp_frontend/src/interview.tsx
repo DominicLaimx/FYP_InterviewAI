@@ -97,6 +97,7 @@ const App: React.FC = () => {
         setQuestion(data.question);
         setExample(data.example);
         setConstraint(data.constraint);
+        handleStartTimer();
       } catch (error) {
         console.error("Error starting interview:", error);
         setQuestion("Failed to load question.");
@@ -106,9 +107,9 @@ const App: React.FC = () => {
     startInterview();
   }, [questionId]);
 
-  useEffect(() => {
-    handleStartTimer();
-  }, [difficulty]);
+  // useEffect(() => {
+  //   handleStartTimer();
+  // }, [difficulty]);
 
   // 2. Clean up interval on unmount
   useEffect(() => {
