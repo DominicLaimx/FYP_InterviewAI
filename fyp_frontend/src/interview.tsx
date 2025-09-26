@@ -97,7 +97,7 @@ const App: React.FC = () => {
         sessionStorage.setItem("session_id", data.session_id); // ✅ Store session_id
         setSessionId(data.session_id);
         sessionStorage.setItem("session_id", data.session_id);
-
+        console.log("DOM", data.difficulty, typeof data.difficulty)
         setDifficulty(data.difficulty)
         setQuestion(data.question);
         setExample(data.example);
