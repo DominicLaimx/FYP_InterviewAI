@@ -47,6 +47,7 @@ const App: React.FC = () => {
   const [example, setExample] = useState<string>("");
   const [constraint, setConstraint] = useState<string>("");
   const [inputMessage, setInputMessage] = useState<string>('');
+  const [difficulty, setDifficulty] = useState<string>("");
 
   // ---- Timer states ----
   const [timeLeft, setTimeLeft] = useState<number>(0);
@@ -97,6 +98,7 @@ const App: React.FC = () => {
         setSessionId(data.session_id);
         sessionStorage.setItem("session_id", data.session_id);
 
+        setDifficulty(data.difficulty)
         setQuestion(data.question);
         setExample(data.example);
         setConstraint(data.constraint);
@@ -121,7 +123,16 @@ const App: React.FC = () => {
     if (timerActive) return; // Don’t start again if it’s already running
 
     // Set to 600 seconds => 10 minutes (using 10 seconds for quick testing)
-    setTimeLeft(600);
+    if (difficulty === "Easy") {
+      setTimeLeft(600);
+    } else if (difficulty === "Medium") {
+      setTimeLeft(900);
+    } else if (difficulty === "Hard") {
+      setTimeLeft(1200);
+    } else {
+      setTimeLeft(900);
+    }
+    
     setTimerActive(true);
 
     timerRef.current = setInterval(() => {
@@ -383,10 +394,7 @@ const maybePlayNextSentence = () => {
           input_code: code
         })
       });
-      console.log("DOM")
       const data = await response.json();
-      console.log(data.res)
-      console.log("DOM2")
       setCodeOutput(data.res); // assuming backend returns {res: "..."}
       setShowCodeOutput(true);
   }catch (error) {
@@ -541,7 +549,7 @@ const toggleRecording = async () => {
 
               {/* Timer Button */}
               <button
-                onClick={handleStartTimer}
+                onClick={() => handleStartTimer()}
                 disabled={timerActive}
                 className="flex items-center gap-2 px-3 py-1 rounded-md bg-green-600 text-white hover:bg-green-700"
               >
