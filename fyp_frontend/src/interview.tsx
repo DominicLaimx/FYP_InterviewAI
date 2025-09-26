@@ -108,7 +108,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     handleStartTimer();
-  }, []);
+  }, [difficulty]);
 
   // 2. Clean up interval on unmount
   useEffect(() => {
